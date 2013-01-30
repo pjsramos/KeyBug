@@ -4,6 +4,24 @@
 
 #define LED_PIN 13
 
+
+#define KEY_RightCTRL   228
+#define KEY_LeftCTRL    224
+#define KEY_CapsLock     57
+#define KEY_RightShift  229
+#define KEY_LeftShift   225
+#define KEY_Tab          43
+#define KEY_RightAlt    230
+#define KEY_LeftAlt     226
+#define KEY_Win         227
+#define KEY_Esc          41
+#define KEY_PageUp       75
+#define KEY_PageDown     78
+#define KEY_RightArrow   79
+#define KEY_LeftArrow    80
+#define KEY_DownArrow    81
+#define KEY_UpArrow      82
+
 int i = 0;
 
 boolean isNextCharACommand=false;
@@ -79,41 +97,56 @@ void convert(int ch) {
   if(isNextCharACommand) {
 
     if(ch=='\n') {
-      Serial.print("Command End - ");
-      Serial.print(command);
-      Serial.println(".");
       isNextCharACommand=false;
       commandPos=0;
 
       if(command=="CL") { //Caps Lock
-        UsbKeyboard.sendKeyStroke( 57 );
+        UsbKeyboard.sendKeyStroke( KEY_CapsLock );
       } 
-      else  if(command=="RS") { //Right Shift
-        UsbKeyboard.sendKeyStroke( 229 );
+      else if(command=="RS") { //Right Shift
+        UsbKeyboard.sendKeyStroke( KEY_RightShift );
       } 
-      else  if(command=="LS") { // Left Shift
-        UsbKeyboard.sendKeyStroke( 225 );
+      else if(command=="LS") { // Left Shift
+        UsbKeyboard.sendKeyStroke( KEY_LeftShift );
       } 
-      else  if(command=="RC") { // Right CTRL
-        UsbKeyboard.sendKeyStroke( 228 );
+      else if(command=="RC") { // Right CTRL
+        UsbKeyboard.sendKeyStroke( KEY_RightCTRL );
       } 
-      else  if(command=="LC") { // Left Ctrl
-        UsbKeyboard.sendKeyStroke( 224 );
+      else if(command=="LC") { // Left Ctrl
+        UsbKeyboard.sendKeyStroke( KEY_LeftCTRL );
       } 
-      else if(command=="RA") { //Right Alt
-        UsbKeyboard.sendKeyStroke( 230 );
+      else if(command=="AG") { //Right Alt
+        UsbKeyboard.sendKeyStroke( KEY_RightAlt );
       } 
-      else  if(command=="LA") { // Left Alt
-        UsbKeyboard.sendKeyStroke( 226 );
+      else if(command=="LA") { // Left Alt
+        UsbKeyboard.sendKeyStroke( KEY_LeftAlt );
       }
       else if(command=="ESC") {
-        UsbKeyboard.sendKeyStroke( 41 );
+        UsbKeyboard.sendKeyStroke( KEY_Esc );
       } 
       else if(command=="TAB") {
-        UsbKeyboard.sendKeyStroke( 43 );
+        UsbKeyboard.sendKeyStroke( KEY_Tab );
       } 
       else if(command=="WIN") {
-        UsbKeyboard.sendKeyStroke( 101 );
+        UsbKeyboard.sendKeyStroke( KEY_Win );
+      } 
+      else if(command=="PU") {
+        UsbKeyboard.sendKeyStroke( KEY_PageUp  );
+      } 
+      else if(command=="PD") {
+        UsbKeyboard.sendKeyStroke( KEY_PageDown  );
+      } 
+      else if(command=="->") {
+        UsbKeyboard.sendKeyStroke( KEY_RightArrow );
+      } 
+      else if(command=="<-") {
+        UsbKeyboard.sendKeyStroke( KEY_LeftArrow );
+      } 
+      else if(command=="V") {
+        UsbKeyboard.sendKeyStroke( KEY_DownArrow );
+      } 
+      else if(command=="A") {
+        UsbKeyboard.sendKeyStroke( KEY_UpArrow  );
       } 
       else if(command=="F1") {
         UsbKeyboard.sendKeyStroke( KEY_F1 );
@@ -145,6 +178,12 @@ void convert(int ch) {
       else if(command=="F10") {
         UsbKeyboard.sendKeyStroke( KEY_F10 );
       } 
+      else if(command=="F11") {
+        UsbKeyboard.sendKeyStroke( KEY_F11 );
+      } 
+      else if(command=="F12") {
+        UsbKeyboard.sendKeyStroke( KEY_F12 );
+      } 
       else {
         // unknown command
       }
@@ -153,20 +192,13 @@ void convert(int ch) {
     } 
     else {
       if(commandPos==commandLenght ) {
-        Serial.println("Command End - to large");
-
         isNextCharACommand=false;
         commandPos=0;
         command="";
       } 
       else {
-        Serial.print("Command char - "+(char)ch);
-        //Serial.print(ch);
-        Serial.println(".");
         command = command + (char)ch ;
-        //        command[commandPos]=ch;
         commandPos++;
-
       }
     }
 
